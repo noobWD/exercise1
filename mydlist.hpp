@@ -81,7 +81,7 @@ public:
 
 	void addToTail(T* in)
 	{
-		MyNode<T>* newNode = new myNode<T>();
+		MyNode<T>* newNode = new MyNode<T>();
 		newNode->set(in);
 		newNode->setPrev(this->tail);
 		this->tail->setPrev(newNode);
