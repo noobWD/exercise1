@@ -61,7 +61,7 @@ public:
 
 	void addToHead(T* in)
 	{
-		MyNode<T>* newNode = new myNode<T>();
+		MyNode<T>* newNode = new MyNode<T>();
 		newNode->set(in);
 		newNode->setNext(this->head);
 		this->head->setPrev(newNode);
