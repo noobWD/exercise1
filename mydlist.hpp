@@ -40,6 +40,7 @@ public:
 
 	int getSize()
 	{
+		cout<<"hello";
 	}
 
 
