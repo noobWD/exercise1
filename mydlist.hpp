@@ -1,99 +1,133 @@
 #include <iostream>
 
+using namespace std;
+
 template<typename T>
 class MyNode
 {
 private:
-	T* e;
-	MyNode<T>* n;
-	MyNode<T>* p;
+    T* e;
+    MyNode<T>* n;
+    MyNode<T>* p;
 
 public:
-	void set(T* in) { this->e = in; }
-	T* get() { return this->e; }
-	void setNext(MyNode<T>* newnext) { n = newnext; }
-	MyNode<T>* getNext() { return this->n; }
-	void setPrev(MyNode<T>* newprev) { p = newprev; }
-	MyNode<T>* getPrev() { return this->p; }
+    void set(T* in) { this->e = in; }
+    T* get() { return this->e; }
+    void setNext(MyNode<T>* newnext) { n = newnext; }
+    MyNode<T>* getNext() { return this->n; }
+    void setPrev(MyNode<T>* newprev) { p = newprev; }
+    MyNode<T>* getPrev() { return this->p; }
 };
-
 template<typename T>
 class MyDoublyLinkedList
 {
 private:
-	MyNode<T>* head;  // sentinel
-	MyNode<T>* tail;  // sentinel
-	int isize;
+    MyNode<T>* head;  // sentinel
+    MyNode<T>* tail;  // sentinel
+    int isize;
 
 public:
-	MyDoublyLinkedList()
-	{
-		this->head = NULL;
-		this->tail = NULL;
-	}
+    MyDoublyLinkedList()
+    {
+        this->head = NULL;
+        this->tail = NULL; 
+        isize = 0;
+    }
 
-	~MyDoublyLinkedList()
-	{
-		while(!this->isEmpty()) removeFromHead();
-	}
+    ~MyDoublyLinkedList()
+    {
+        while (!this->isEmpty()) removeFromHead();
+    }
 
-	bool isEmpty()
-	{
-		if(this->head) return false;
-		else return true;
-	}
+    bool isEmpty()                                                          
+    {
+        if (this->head == NULL) return true;
+        else return false;
+    }
 
-	int getSize()
-	{
-		return isize;
-	}
+    int getSize()
+    {
+        return isize;
+    }
+
+    MyNode<T>* getHeadNode()
+    {
+
+        return this->head;
+    }
+
+    MyNode<T>* getTailNode()
+    {
+        return this->tail;
+    }
+
+    void addToHead(T* in)
+    {
+        MyNode<T>* newNode = new MyNode<T>();
+        newNode->set(in);
+
+        if (this->isEmpty()) {
+            this->head = newNode;
+            this->tail = newNode;
+            isize++;
+            return;
+        }
+
+        newNode->setNext(this->head);
+        this->head->setPrev(newNode);
+        this->head = newNode;
+        isize++;
+    }
+
+    void removeFromHead()
+    {
+        MyNode<T>* temp = this->head;
+        if (isize == 1) {
+            this->head = NULL;
+            this->tail = NULL;
+            isize--;
+            delete temp;
+            return;
+        }
+
+        this->head = this->head->getNext();
+        delete temp;
+        isize--;
+    }
 
 
-	MyNode<T>* getHeadNode()
-	{
-		return this->head;
-	}
+    void addToTail(T* in)
+    {
+        MyNode<T>* newNode = new MyNode<T>();
+        newNode->set(in);
+        if (this->isEmpty()) {
+            this->head = newNode;
+            this->tail = newNode;
+            newNode->setPrev(NULL);
+            newNode->setNext(NULL);
+            isize++;
+            return;
+        }
 
-	MyNode<T>* getTailNode()
-	{
-		return this->tail;
-	}
+        newNode->setPrev(this->tail);
+        this->tail->setNext(newNode);
+        this->tail = newNode;
+        isize++;
+    }
 
-	void addToHead(T* in)
-	{
-		MyNode<T>* newNode = new MyNode<T>();
-		newNode->set(in);
-		newNode->setNext(this->head);
-		this->head->setPrev(newNode);
-		this->head = newNode;
-		isize++;
+    void removeFromTail()
+    {
+        MyNode<T>* temp = this->tail;
+        if (isize == 1) {
+            this->head = NULL;
+            this->tail = NULL;
+            isize--;
+            delete temp;
+            return;
+        }
 
-	}
-
-	void removeFromHead()
-	{
-		MyNode<T>* temp = this->head;
-		this->head = this->head->getNext();
-		delete temp;
-		isize--;
-	}
-
-
-	void addToTail(T* in)
-	{
-		MyNode<T>* newNode = new MyNode<T>();
-		newNode->set(in);
-		newNode->setPrev(this->tail);
-		this->tail->setPrev(newNode);
-		this->tail = newNode;
-		isize++;
-	}
-
-	void removeFromTail()
-	{
-		MyNode<T>* temp = this->tail;
-		this->tail = this->tail->getPrev();
-		delete temp;
-		isize--;
-	}
+        this->tail = this->tail->getPrev();
+        delete temp;
+        isize--;
+    }
 };
