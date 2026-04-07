@@ -28,44 +28,68 @@ private:
 public:
 	MyDoublyLinkedList()
 	{
+		this->head = NULL;
+		this->tail = NULL;
 	}
 
 	~MyDoublyLinkedList()
 	{
+		while(!this->empty()) removeFromHead();
 	}
 
 	bool isEmpty()
 	{
+		if(this->head) return false;
+		else return true;
 	}
 
 	int getSize()
 	{
-		cout<<"hello";
+		return isize;
 	}
 
 
 	MyNode<T>* getHeadNode()
 	{
+		return this->head;
 	}
 
 	MyNode<T>* getTailNode()
 	{
+		return this->tail;
 	}
 
 	void addToHead(T* in)
 	{
+		Mynode<T>* newNode = new mynode<T>();
+		newNode->set(in);
+		newNode->setNext(this->head);
+		this->head->setPrev(newNode);
+		this->head = newNode;
+
 	}
 
 	void removeFromHead()
 	{
+		Mynode<T>* temp = this->head;
+		this->head = this->head->getNext();
+		delete temp;
 	}
 
 
 	void addToTail(T* in)
 	{
+		Mynode<T>* newNode = new mynode<T>();
+		newNode->set(in);
+		newNode->setPrev(this->tail);
+		this->tail->setPrev(newNode);
+		this->tail = newNode;
 	}
 
 	void removeFromTail()
 	{
+		Mynode<t>* temp = this->tail;
+		this->tail = this->tail.getPrev();
+		delete temp;
 	}
 };
