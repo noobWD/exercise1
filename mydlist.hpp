@@ -11,6 +11,12 @@ private:
     MyNode<T>* p;
 
 public:
+    MyNode<T>(){
+	    e = NULL;
+	    n = NULL;
+	    p = NULL;
+    }
+
     void set(T* in) { this->e = in; }
     T* get() { return this->e; }
     void setNext(MyNode<T>* newnext) { n = newnext; }
@@ -81,6 +87,8 @@ public:
 
     void removeFromHead()
     {
+	if(this->isEmpty()) return;
+
         MyNode<T>* temp = this->head;
         if (isize == 1) {
             this->head = NULL;
@@ -91,6 +99,7 @@ public:
         }
 
         this->head = this->head->getNext();
+	this->head->setPrev(NULL);
         delete temp;
         isize--;
     }
@@ -115,6 +124,7 @@ public:
 
     void removeFromTail()
     {
+	if(this->isEmpty()) return;
         MyNode<T>* temp = this->tail;
         if (isize == 1) {
             this->head = NULL;
@@ -125,6 +135,7 @@ public:
         }
 
         this->tail = this->tail->getPrev();
+	this->tail->setNext(NULL);
         delete temp;
         isize--;
     }
